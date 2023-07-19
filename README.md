@@ -81,8 +81,9 @@ _AIRFLOW_WWW_USER_CREATE=True
 _AIRFLOW_WWW_USER_USERNAME=airflow
 _AIRFLOW_WWW_USER_PASSWORD=airflow
 ```
-3. Set up the Airflow environment and create the necessary connections and DAGs for the ETL task.
-4. Run the Flask app on your preferred web server.
-5. Access the Flask app through its endpoints to query the MySQL database and save/retrieve data from the S3 bucket.
+3. Create a virtual environmen and run `pip3 install -r requirements.tct`
+4. Start the backend services as containsers by running `docker-compose up`
+5. Run the Flask app by running `python3 app.py`.
+6. Access the Flask app through its endpoints ([API DOCUMENTATION](https://documenter.getpostman.com/view/10629518/2s946ibrCP)) to query the MySQL database and save/retrieve data from the S3 bucket.
 
 Enjoy the efficiency and convenience of the Manhattan Data Analytics Platform, designed to transform data analysis for your business!
