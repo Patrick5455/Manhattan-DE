@@ -1,0 +1,11 @@
+.idea/
+*.iml
+.env
+*__pycache__
+manhttan_db-data/
+plugins/
+postgres-data/
+airflow_db-data/
+.virtual/
+logs
+airbyte

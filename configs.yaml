@@ -1,0 +1,4 @@
+S3_CONFIG:
+  BUCKET_NAME: 'query_result_dump'
+  PREFIX: 'queries'
+  S3_REGION: 'eu-central-1'

@@ -1,0 +1,64 @@
+version: "3"
+services:
+  airflow-webserver:
+    image: apache/airflow:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: airflow-webserver
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+      - ./requirements.txt:/requirements.txt
+    command: airflow webserver
+    env_file:
+      - .env
+    depends_on:
+      - airflow_db
+
+  airflow-scheduler:
+    image: apache/airflow:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: airflow-scheduler
+    restart: always
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+      - ./requirements.txt:/requirements.txt
+    command: airflow scheduler
+    env_file:
+      - .env
+    depends_on:
+      - airflow_db
+
+  airflow_db:
+    image: postgres:13
+    container_name: airflow_db
+    restart: always
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    volumes:
+      - ./airflow_db-data:/var/lib/postgresql/data
+
+  manhattan_db:
+    image: mysql:8.0
+    container_name: manhattan_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./manhattan_db_scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
